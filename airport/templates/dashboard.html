@@ -1,0 +1,606 @@
+
+{% load static %}
+
+<!DOCTYPE html>  
+<html lang="en">  
+
+<head>  
+    <meta charset="UTF-8">  
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans:400" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link type="css/style.css"  rel="stylesheet" href="{% static "css/bootstrap.min.css" %}" />
+
+	<!-- Custom stlylesheet -->
+	<link type="static/css" rel="stylesheet" href="{% static "css/style.css" %}" />
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+</head>  
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+  <img src ="{% static "resources/images/e757128c-d66f-4222-bbe0-d83c85a57f12_200x200.png" %}" >
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/dashboard">Home </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/about">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/show_fl">Flights</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Tables
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/show">Airports</a>
+          <a class="dropdown-item" href="/show_al">Airlines</a>
+          <a class="dropdown-item" href="/show_tk">Tickets</a>
+        </div>
+      </li>
+      <li class="nav-item button bg-primary">
+        <a class="nav-link" href="/tk">Book a Ticket</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+
+  .section {
+	position: relative;
+	height: 100vh;
+}
+
+.section .section-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#booking {
+	font-family: 'PT Sans', sans-serif;
+	background-image: url("{%static "resources/images/background.JPG"%}");
+	background-size: cover;
+	background-position: center;
+}
+
+.booking-form {
+	background: rgba(0, 0, 0, 0.7);
+	padding: 40px;
+	border-radius: 6px;
+}
+
+.booking-form .form-group {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.booking-form .form-control {
+	background-color: #fff;
+	height: 50px;
+	color: #191a1e;
+	border: none;
+	font-size: 16px;
+	font-weight: 400;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-radius: 40px;
+	padding: 0px 25px;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: rgba(82, 82, 84, 0.4);
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: rgba(82, 82, 84, 0.4);
+}
+
+.booking-form .form-control::placeholder {
+	color: rgba(82, 82, 84, 0.4);
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: rgba(82, 82, 84, 0.4);
+}
+
+.booking-form select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 10px;
+	bottom: 6px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: rgba(0, 0, 0, 0.3);
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.booking-form .form-label {
+	display: block;
+	margin-left: 20px;
+	margin-bottom: 5px;
+	font-weight: 400;
+	text-transform: uppercase;
+	line-height: 24px;
+	height: 24px;
+	font-size: 12px;
+	color: #fff;
+}
+
+.booking-form .form-checkbox input {
+	position: absolute !important;
+	margin-left: -9999px !important;
+	visibility: hidden !important;
+}
+
+.booking-form .form-checkbox label {
+	position: relative;
+	padding-top: 4px;
+	padding-left: 30px;
+	font-weight: 400;
+	color: #fff;
+}
+
+.booking-form .form-checkbox label+label {
+	margin-left: 15px;
+}
+
+.booking-form .form-checkbox input+span {
+	position: absolute;
+	left: 2px;
+	top: 4px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 50%;
+}
+
+.booking-form .form-checkbox input+span:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0px;
+	height: 0px;
+	border-radius: 50%;
+	background-color: #f23e3e;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.booking-form .form-checkbox input:not(:checked)+span:after {
+	opacity: 0;
+}
+
+.booking-form .form-checkbox input:checked+span:after {
+	opacity: 1;
+	width: 10px;
+	height: 10px;
+}
+
+.booking-form .form-btn {
+	margin-top: 27px;
+}
+
+.booking-form .submit-btn {
+	color: #fff;
+	background-color: #f23e3e;
+	font-weight: 400;
+	height: 50px;
+	font-size: 14px;
+	border: none;
+	width: 100%;
+	border-radius: 40px;
+	text-transform: uppercase;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+}
+
+.booking-form .submit-btn:hover,
+.booking-form .submit-btn:focus {
+	opacity: 0.9;
+
+</style>
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form">
+						<form>
+							<div class="form-group">
+								<div class="form-checkbox">
+									<label for="roundtrip">
+										<input type="radio" id="roundtrip" name="flight-type">
+										<span></span>Roundtrip
+									</label>
+									<label for="one-way">
+										<input type="radio" id="one-way" name="flight-type">
+										<span></span>One way
+									</label>
+									<label for="multi-city">
+										<input type="radio" id="multi-city" name="flight-type">
+										<span></span>Multi-City
+									</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="form-label">Flying from</span>
+										<input class="form-control" type="text" placeholder="City or airport">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<span class="form-label">Flyning to</span>
+										<input class="form-control" type="text" placeholder="City or airport">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+									<div class="form-group">
+										<span class="form-label">Departing</span>
+										<input class="form-control" type="date" required>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<span class="form-label">Returning</span>
+										<input class="form-control" type="date" required>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<span class="form-label">Adults (18+)</span>
+										<select class="form-control">
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<span class="form-label">Children (0-17)</span>
+										<select class="form-control">
+											<option>0</option>
+											<option>1</option>
+											<option>2</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">
+									<div class="form-group">
+										<span class="form-label">Travel class</span>
+										<select class="form-control">
+											<option>Economy class</option>
+											<option>Business class</option>
+											<option>First class</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-btn">
+										<button class="submit-btn">Show flights</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="jumbotron">  
+<h1 class="display-4">Technologies Used</h1>
+<div class="card-group">
+  <div class="card">
+    <img src="{% static "resources/images/How-to-run-a-python-django-app-in-docker.png" %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Django</h5>
+      <hr class="my-4">
+      <p class="card-text">Django is a high-level Python web framework that enables rapid development of secure and maintainable websites. Built by experienced developers, Django takes care of much of the hassle of web development, so you can focus on writing your app without needing to reinvent the wheel. It is free and open source, has a thriving and active community, great documentation, and many options for free and paid-for support</p>
+      
+    </div>
+  </div>
+  <div class="card">
+    <img src="{% static "resources/images/bootstrap-stack.png" %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Bootstrap</h5>
+      <hr class="my-4">
+      <p class="card-text">Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery.</p>
+      
+    </div>
+  </div>
+  <div class="card">
+    <img src="{% static "resources/images/mysql-5-logo-png-transparent.png" %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">MySQL</h5>
+      <hr class="my-4">
+      <p class="card-text">MySQL is a database management system that allows you to manage relational databases. It is open source software backed by Oracle. It means you can use MySQL without paying a dime. Also, if you want, you can change its source code to suit your needs.
+        Even though MySQL is open source software, you can buy a commercial license version from Oracle to get premium support services
+      If you develop websites or web applications, MySQL is a good choice. MySQL is an essential component of the LAMP stack, which includes Linux, Apache, MySQL, and PHP.</p>
+    </div>
+  </div>
+</div>
+</div>
+<style>
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #FFFFFF;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+</style>
+
+<div class="jumbotron">
+<h1 class="display-4"><center>Airports</center></h1>
+<div class="container">
+  <img src="{% static "resources/images/09f5ce71c2a38f744069a1039a461383.jpg" %}" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text" ><a class="nav-link" href="/CSIA">CSIA</a></div>
+  </div>
+</div>
+<div class="container">
+  <img src="{% static "resources/images/DIAL-Phase-3A-Expansion-Works-916x516.jpg" %}" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text"><a class="nav-link" href="/IGIA">IGIA</a></div>
+  </div>
+</div>
+<div class="container">
+  <img src="{% static "resources/images/Bangalore-airport-660.jpg" %}" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text"><a class="nav-link" href="/KIA">KIA</a></div>
+  </div>
+</div>
+<div class="container">
+  <img src="{% static "resources/images/220px-Heathrow_Airport_014.jpg" %}" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text"><a class="nav-link" href="/HIA">HIA</a></div>
+  </div>
+</div>
+<div class="container">
+  <div class="middle">
+    <div class="text"><a class="nav-link" href="/CHA">CHA</a></div>
+  </div>
+</div>
+<div class="container">
+  <img src="{% static "resources/images/Frankfurt-airport-e1469441359458.jpg" %}" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text"><a class="nav-link" href="/FIA">FIA</a></div>
+  </div>
+</div>
+<div class="container">
+  <img src="{% static "resources/images/dus.jpg" %}" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text"><a class="nav-link" href="/DIA">DIA</a></div>
+  </div>
+</div>
+
+<div class="container">
+      <img src="{% static "resources/images/dubai.jpg" %}" alt="Avatar" class="image" style="width:100%">
+    <div class="middle">
+    <div class="text"><a class="nav-link" href="/DBIA">DBIA</a></div>
+  </div>
+      </div>
+ 
+<div class="container">
+  <img src="{% static "resources/images/lax.jpg" %}"alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text"><a class="nav-link" href="/LAIA">LAIA</a></div>
+  </div>
+</div>
+</div>
+<div class="jumbotron">
+<h1 class="display-4">Airlines</h1>
+   <div class="row row-cols-1 row-cols-md-2">
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/SpiceJet_logo.svg" %}" class="card-img-top" >
+      <div class="card-body">
+        <h5 class="card-title">SpiceJet</h5>
+        <p class="card-text">SpiceJet is an Indian low-cost airline headquartered in Gurgaon, India. It is the second largest airline in the country by number of domestic passengers carried, with a market share of 13.6% as of March 2019.The airline operates 630 daily flights to 64 destinations, including 54 Indian and 10 international destinations from its hubs at Delhi and Hyderabad.</p>
+        <p class="card-text">IATA:SG ICAO:SEJ Fleet Size:117 Destinations:63</p>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/GoAir_logo - Copy.svg" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">GoAir</h5>
+        <p class="card-text">GoAir is an Indian low-cost airline based in Mumbai, India. It is owned by the Indian business conglomerate Wadia Group. In October 2017 it was the fifth largest airline in India with an 8.4% passenger market share.</p>
+        <p class="card-text">IATA:G8 ICAO:GOW Fleet Size:57 Destinations:38</p>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/IndiGo_logo.svg" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">IndiGo</h5>
+        <p class="card-text">IndiGo is an Indian low-cost airline headquartered in Gurugram, Haryana, India. It is the largest airline in India by passengers carried and fleet size, with a 47.5% domestic market share as of November 2019.[5] It is also the largest individual Asian low-cost carrier in terms of jet fleet size and passengers carried, and the sixth largest carrier in Asia with over 64 million passengers carried in financial year 2018–19.</p>
+        <p class="card-text">IATA:6E ICAO:IGO Fleet Size:261 Destinations:87</p>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/Lufthansa-logo.jpg" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Lufthansa</h5>
+        <p class="card-text">Deutsche Lufthansa AG commonly known as Lufthansa, is the flag carrier and largest German airline which, when combined with its subsidiaries, is the second largest airline in Europe in terms of passengers carried.Lufthansa is one of the five founding members of Star Alliance, the world's largest airline alliance, formed in 1997.</p>
+        <p class="card-text">IATA:LH ICAO:DLH Fleet Size:300 Destinations:220</p>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/British_Airways_Logo.svg" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">British Airways</h5>
+        <p class="card-text">British Airways (BA) is the flag carrier airline of the United Kingdom, headquartered in London, England, near its main hub at Heathrow Airport. It is the second largest airline in the United Kingdom, based on fleet size and passengers carried, behind easyJet. In January 2011 BA merged with Iberia, creating the International Airlines Group (IAG), a holding company registered in Madrid, Spain. IAG is the world's third-largest airline group in terms of annual revenue and the second-largest in Europe.</p>
+        <p class="card-text">IATA:BA ICAO:BAW Fleet Size:277 Destinations:183</p>
+      </div>
+    </div>
+  </div>
+<div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/Ryanair.svg" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Ryanair</h5>
+        <p class="card-text">Ryanair DAC[3] is an Irish budget airline founded in 1984, headquartered in Swords, Dublin, with its primary operational bases at Dublin and London Stansted airports. It forms the largest part of the Ryanair Holdings family of airlines, and has Ryanair UK, Buzz, Malta Air and Lauda as sister airlines. In 2016, Ryanair was the largest European budget airline by scheduled passengers flown, and carried more international passengers than any other airline</p>
+        <p class="card-text">IATA:FR ICAO:RYR Fleet Size:282 Destinations:225</p>
+      </div>
+    </div>
+  </div>
+<div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/Eurowings_Logo.svg" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Eurowings</h5>
+        <p class="card-text">Eurowings GmbH is a German low-cost airline[5] headquartered in Düsseldorf[4] and a wholly owned subsidiary of the Lufthansa Group. Founded in 1996, it serves a network of domestic and European destinations as well as some long-haul routes and maintains bases at Berlin Tegel Airport, Cologne Bonn Airport, Düsseldorf Airport, Hamburg Airport, Hannover Airport, Munich Airport, Nuremberg Airport, Palma de Mallorca Airport, Pristina International Airport,[3] Salzburg Airport, Stuttgart Airport, and Vienna International Airport.</p>
+        <p class="card-text">IATA:EW ICAO:EWG Fleet Size:96 Destinations:79</p>
+      </div>
+    </div>
+  </div>
+<div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/1200px-AirAsia_Logo_Red.svg.png" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">AirAsia</h5>
+        <p class="card-text">AirAsia Berhad (MYX: 5099) is a Malaysian low-cost airline headquartered near Kuala Lumpur, Malaysia. It is the largest airline in Malaysia by fleet size and destinations. AirAsia Group operates scheduled domestic and international flights to more than 165 destinations spanning 25 countries.[4] Its main hub is klia2, the low-cost carrier terminal at Kuala Lumpur International Airport (KLIA) in Sepang, Selangor, Malaysia. </p>
+        <p class="card-text">IATA:AK ICAO:AXM Fleet Size:255 Destinations:165</p>
+      </div>
+    </div>
+  </div>
+<div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/Vistara_logo.svg" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Vistara</h5>
+        <p class="card-text">Tata SIA Airlines Limited, operating as Vistara, is an Indian full-service airline, based in Gurgaon, with its hub at Indira Gandhi International Airport. The carrier, a joint venture between Tata Sons and Singapore Airlines, commenced operations on 9 January 2015 with its inaugural flight between Delhi and Mumbai. The airline had carried more than two million passengers by June 2016[2] and as of May 2019, has a 4.7% share [3] of the domestic carrier market, making it the 6th largest domestic airline.[4] The airline serves 34[5] destinations with a fleet of Airbus A320, Boeing 787 and Boeing 737-800NG[6] aircraft. [7]</p>
+        <p class="card-text">IATA:UK ICAO:VTI Fleet Size:40 Destinations:34</p>
+      </div>
+    </div>
+  </div>
+<div class="col mb-4">
+    <div class="card">
+      <img src="{% static "resources/images/453px-Emirates_logo.svg.png" %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Emirates</h5>
+        <p class="card-text">Emirates  is a state-owned flag carrier airline based in Garhoud, Dubai, United Arab Emirates. The airline is a subsidiary of The Emirates Group, which is owned by the government of Dubai's Investment Corporation of Dubai. It is the largest airline in the Middle East, operating over 3,600 flights per week from its hub at Terminal 3 of Dubai International Airport, to more than 150 cities in 80 countries across six continents. Cargo activities are undertaken by Emirates SkyCargo.Emirates is the world's fourth largest airline by scheduled revenue passenger-kilometers flown, and the second-largest in terms of freight tonne kilometers flown.</p>
+        <p class="card-text">IATA:EK ICAO:UAE Fleet Size:257 Destinations:159</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class='jumbotron'>
+<h1 class="display-4"><center> Book a Ticket</center> </h1>
+<!--<input type="text" class="form-control" id="tname"  placeholder="Name">
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Choose Airline
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" >GoAir</a>
+    <a class="dropdown-item" >IndiGo</a>
+    <a class="dropdown-item" >SpiceJet</a>
+    <a class="dropdown-item" >Lufthansa</a>
+    <a class="dropdown-item" >Ryanair</a>
+    <a class="dropdown-item" >British Airways</a>
+    <a class="dropdown-item" >Emirates</a>
+    <a class="dropdown-item" >Vistara</a>
+    <a class="dropdown-item" >Eurowings</a>
+    <a class="dropdown-item" >AirAsia</a>
+  </div>
+</div>-->    
+  <div>
+  <center><a href="/tk"><button class="btn  btn-light " type="button" id="MenuButton" >
+    Book it
+  </a></button></center>
+  </div>
+
+</div>
+ </body>  
+</html>  
