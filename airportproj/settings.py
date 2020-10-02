@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'airportproj.wsgi.application'
 DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'airportproj',  
-        'USER':'root',  
-        'PASSWORD':'QL2020db',  
-        'HOST':'localhost',  
-        'PORT':'3306'  
+        'NAME': 'database_name',  
+        'USER':'username',  
+        'PASSWORD':'yourpassword',  
+        'HOST':'hostname',  
+        'PORT':'****'  
     }  
 }  
 
